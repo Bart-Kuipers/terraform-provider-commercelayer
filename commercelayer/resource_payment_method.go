@@ -2,6 +2,7 @@ package commercelayer
 
 import (
 	"context"
+
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	commercelayer "github.com/labd/go-commercelayer-sdk/api"
@@ -160,13 +161,13 @@ func resourcePaymentMethodReadFunc(ctx context.Context, d *schema.ResourceData, 
 		return diagErr(err)
 	}
 
-	address, ok := resp.GetDataOk()
+	paymentMethod, ok := resp.GetDataOk()
 	if !ok {
 		d.SetId("")
 		return nil
 	}
 
-	d.SetId(address.GetId().(string))
+	d.SetId(paymentMethod.GetId().(string))
 
 	return nil
 }
